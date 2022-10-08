@@ -1,18 +1,22 @@
 //post application JSON
 
-var express= require('express');
+// multipart form data
 
-var bodyParser= require('body-parser');
+var express= require('express');
+var multer= require('multer');
+var multer=multer();
+
 var app=express();
-app.use(bodyParser.json());
+app.use(multer.array())
 
 app.post('/',function(req,res){
+
     let JSONData= req.body;
-   let name=JSONData['name']
-   let city=JSONData['city']
-   res.send(name+"  "+city);
+
+    res.send(JSON.stringify(JSONData))
 })
 
-app.listen(5041,function(){
+
+app.listen(5042,function(){
     console.log("server run success")
 })
