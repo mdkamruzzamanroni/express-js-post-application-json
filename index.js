@@ -8,10 +8,11 @@ app.use(bodyParser.json());
 
 app.post('/',function(req,res){
     let JSONData= req.body;
-    let JSONString= JSON.stringify(JSONData);
-    res.send(JSONString);
+   let name=JSONData['name']
+   let city=JSONData['city']
+   res.send(name+"  "+city);
 })
 
-app.listen(5040,function(){
+app.listen(5041,function(){
     console.log("server run success")
 })
