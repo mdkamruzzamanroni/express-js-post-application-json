@@ -1,22 +1,30 @@
-//post application JSON
-
-// multipart form data
+//file upload
 
 var express= require('express');
-var multer= require('multer');
-var multer=multer();
-
-var app=express();
-app.use(multer.array())
+var multer= require('multer')
+var app= express();
+var storage= multer.diskStorage({
+    destination:function(req,file,callback){
+        callback(null,'./uploads')
+    },
+   filename:function(req,file,callback){
+    callback(null,file.originalname)
+},
+})
+var upload=multer({storage:storage}).single('myfile')
 
 app.post('/',function(req,res){
+    upload(req,res,function(error){
 
-    let JSONData= req.body;
-
-    res.send(JSON.stringify(JSONData))
+        if(error){
+            res.send("file upload fail")
+        }
+        else{
+            res.send( "file upload success")
+        }
+    })
 })
 
-
-app.listen(5042,function(){
+app.listen(5047,function(){
     console.log("server run success")
 })
