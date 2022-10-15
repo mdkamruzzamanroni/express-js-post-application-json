@@ -11,20 +11,37 @@ var storage= multer.diskStorage({
     callback(null,file.originalname)
 },
 })
-var upload=multer({storage:storage}).single('myfile')
 
- function fileFilter (req, file, cb) {
-    
-    file.mimetype=="image/jpg"
-    file.mimetype=="image/png"
-    cb(null,false)
-    cb(null,true)
- } 
+const upload=multer({
+    storage:storage,
+    fileFilter: (req, file, cb)=> {
+      if(file.mimetype==="image/jpg"||
+        file.mimetype==="image/png"||
+        file.mimetype==="image/jpeg"||
+        file.mimetype==="image/webp"      
+      ){
+        cb(null, true)
+      }else{
+        cb(null, false);
+        return cb(new Error("Only jpg, png, jpeg and webp format is allowed"))
+      }
+    }
+   
+  }).single('myfile')
+// var upload=multer({storage:storage}).single('myfile')
 
-  
-
-
-
+// fileFilter: (req, file, cb)=> {
+//     if(file.mimetype==="image/jpg"||
+//     file.mimetype==="image/png"||
+//     file.mimetype==="image/jpeg"||
+//     file.mimetype==="image/webp"
+//     ){
+//     cb(null, true)
+//     }else{
+//     cb(null, false);
+//     return cb(new Error("Only jpg, png, jpeg and webp format is allowed"))
+//     }
+//     },
 app.post('/',function(req,res){
     upload(req,res,function(error){
 
@@ -37,6 +54,6 @@ app.post('/',function(req,res){
     })
 })
 
-app.listen(505,function(){
+app.listen(511,function(){
     console.log("server run success")
 })
