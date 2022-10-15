@@ -13,6 +13,18 @@ var storage= multer.diskStorage({
 })
 var upload=multer({storage:storage}).single('myfile')
 
+ function fileFilter (req, file, cb) {
+    
+    file.mimetype=="image/jpg"
+    file.mimetype=="image/png"
+    cb(null,false)
+    cb(null,true)
+ } 
+
+  
+
+
+
 app.post('/',function(req,res){
     upload(req,res,function(error){
 
@@ -25,6 +37,6 @@ app.post('/',function(req,res){
     })
 })
 
-app.listen(5047,function(){
+app.listen(505,function(){
     console.log("server run success")
 })
